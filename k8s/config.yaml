@@ -4,9 +4,10 @@ kind: ConfigMap
 metadata:
   name: template-config
 data:
-  VITE_AUTH_API_URL: "https://district12.xyz/auth"
-  VITE_PAYMENT_API_URL: "https://district12.xyz/pay"
-  VITE_DOWNLOAD_API_URL: "https://district12.xyz/down"
+  AUTH_SERVICE_URL: "https://service.district12.xyz/auth"
+  VITE_AUTH_API_URL: "https://service.district12.xyz/auth"
+  VITE_PAYMENT_API_URL: "https://service.district12.xyz/pay"
+  VITE_DOWNLOAD_API_URL: "https://service.district12.xyz/down"
   REDIS_HOST: "redis"
   REDIS_PORT: "6379"
   # POSTGRES_HOST: "template-pg-do-user-18003520-0.g.db.ondigitalocean.com"
