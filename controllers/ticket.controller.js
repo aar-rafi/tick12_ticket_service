@@ -25,16 +25,18 @@ const bookTicket = async (req, res) => {
       getStationId(to_station_name),
     ]);
 
+    console.log(from_station_id, to_station_id);
+
     // Insert ticket
     const ticket_id = uuidv4();
     const price = 200;
     const insertTicketQuery = `
-      INSERT INTO tickets (ticket_id, train_id, seat_number, user_id, from_station_id, to_station_id, price)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
-      RETURNING id, ticket_id, train_id, seat_number, user_id, from_station_id, to_station_id, price;
+      INSERT INTO tickets (ticket_id, user_id, train_id, seat_number, price, status)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING ticket_id, user_id, train_id, seat_number, price, status;
     `;
     const result = await pool.query(insertTicketQuery, [
-      ticket_id, train_id, seat_number, user_id, from_station_id, to_station_id, price,
+      ticket_id, user_id, train_id, seat_number, price, 1
     ]);
     const ticket = result.rows[0];
 
