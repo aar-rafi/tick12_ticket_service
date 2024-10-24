@@ -1,0 +1,13 @@
+# ticket-service Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: tick12-ticket-service
+spec:
+  selector:
+    app: ticket
+  ports:
+    - protocol: TCP
+      port: 8001
+      targetPort: 8001
+  type: ClusterIP
