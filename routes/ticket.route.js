@@ -1,7 +1,8 @@
 import express from "express";
-import { bookTicket } from "../controllers/ticket.controller.js";
+import { bookTickets } from "../controllers/ticket.controller.js";
+import auth from "../middleware/auth.mw.js";
 const router = express.Router();
 
-router.post("/book", bookTicket);
+router.post("/book", auth, bookTickets);
 
 export default router;
