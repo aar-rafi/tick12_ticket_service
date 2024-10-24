@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { v4 as uuidv4 } from 'uuid'; // Import for generating unique ticket_id
 import "dotenv/config.js";
 import { pool } from "../database/pool.js";
