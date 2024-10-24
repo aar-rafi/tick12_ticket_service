@@ -13,7 +13,7 @@
   "to_station_name": "Khulna",
   "train_id": "01827216261",
   "user_id": "01827216261",
-  "seat_number": 12
+  "seat_numbers": [10, 20, 30]
 }
 ```
 

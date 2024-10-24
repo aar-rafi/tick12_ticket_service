@@ -10,13 +10,13 @@ const getStationId = async (station_name) => {
   return result.rows[0].station_id;
 };
 
-// Book a ticket
-const bookTicket = async (req, res) => {
-  const { from_station_name, to_station_name, user_id, train_id, seat_number } = req.body;
+// Book tickets for multiple seats
+const bookTickets = async (req, res) => {
+  const { from_station_name, to_station_name, user_id, train_id, seat_numbers } = req.body;
 
   try {
-    if (!from_station_name || !to_station_name || !user_id || !train_id || !seat_number) {
-      return res.status(400).send({ error: "All fields are required" });
+    if (!from_station_name || !to_station_name || !user_id || !train_id || !seat_numbers || seat_numbers.length === 0) {
+      return res.status(400).send({ error: "All fields are required, including seat numbers" });
     }
 
     // Get station IDs from names
@@ -27,29 +27,35 @@ const bookTicket = async (req, res) => {
 
     console.log(from_station_id, to_station_id);
 
-    // Insert ticket
-    const ticket_id = uuidv4();
+    const tickets = [];
     const price = 200;
-    const insertTicketQuery = `
-      INSERT INTO tickets (ticket_id, user_id, train_id, seat_number, price, status)
-      VALUES ($1, $2, $3, $4, $5, $6)
-      RETURNING ticket_id, user_id, train_id, seat_number, price, status;
-    `;
-    const result = await pool.query(insertTicketQuery, [
-      ticket_id, user_id, train_id, seat_number, price, 1
-    ]);
-    const ticket = result.rows[0];
 
-    // Return response
+    // Insert tickets for each seat in seat_numbers array
+    for (const seat_number of seat_numbers) {
+      const ticket_id = uuidv4();
+      const insertTicketQuery = `
+        INSERT INTO tickets (ticket_id, user_id, train_id, seat_number, price, status)
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING ticket_id, user_id, train_id, seat_number, price, status;
+      `;
+      const result = await pool.query(insertTicketQuery, [
+        ticket_id, user_id, train_id, seat_number, price, 1
+      ]);
+
+      tickets.push(result.rows[0]);
+    }
+
+    // Return all booked tickets
     return res.status(201).send({
-      message: "Ticket booked successfully",
-      ticket,
+      message: "Tickets booked successfully",
+      tickets,
     });
+
   } catch (e) {
     console.error(e.message);
     const status = e.message.includes("not found") ? 404 : 500;
-    return res.status(status).send({ error: e.message || "Failed to book ticket" });
+    return res.status(status).send({ error: e.message || "Failed to book tickets" });
   }
 };
 
-export { bookTicket };
+export { bookTickets };
