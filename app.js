@@ -31,6 +31,18 @@ pool.connect((err, client, release) => {
   release(); // release the client back to the pool
 });
 
+// Prometheus
+import promMid from "express-prometheus-middleware";
+app.use(
+  promMid({
+    metricsPath: "/metrics",
+    collectDefaultMetrics: true,
+    requestDurationBuckets: [0.1, 0.5, 1, 1.5],
+    requestLengthBuckets: [512, 1024, 5120, 10240, 51200, 102400],
+    responseLengthBuckets: [512, 1024, 5120, 10240, 51200, 102400],
+  })
+);
+
 // Importing the routes
 import ticketRoute from "./routes/ticket.route.js";
 app.use("/api/ticket", ticketRoute);
