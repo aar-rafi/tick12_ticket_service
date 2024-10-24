@@ -32,8 +32,8 @@ pool.connect((err, client, release) => {
 });
 
 // Importing the routes
-import userRoute from "./routes/user.route.js";
-app.use("/api/user", userRoute);
+import ticketRoute from "./routes/ticket.route.js";
+app.use("/api/ticket", ticketRoute);
 
 // Default URL
 app.use("/", (req, res) => {
