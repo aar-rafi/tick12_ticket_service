@@ -1,5 +1,0 @@
-npm install mongoose supertest --save-dev
-npm install jest --save-dev
-npm install --save-dev babel-jest @babel/preset-env
-Edit babel.config.js
-Edit package.json
