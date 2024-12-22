@@ -10,10 +10,6 @@ data:
   VITE_DOWNLOAD_API_URL: "https://service.district12.xyz/down"
   REDIS_HOST: "redis"
   REDIS_PORT: "6379"
-  # POSTGRES_HOST: "template-pg-do-user-18003520-0.g.db.ondigitalocean.com"
-  # POSTGRES_PORT: "25060"
-  # POSTGRES_DB: "defaultdb"
-  # POSTGRES_USER: "doadmin"
 ---
 apiVersion: v1
 kind: Secret
