@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import express from "express";
 import cors from "cors";
-import {pool} from "./database/pool.js";
+//import { pool } from "./database/pool.js";
+import { sql, requestHandler } from "./database/neon/pool.js";
 
 const app = express();
 
@@ -23,13 +24,15 @@ app.options("*", cors(corsOptions));
 console.log("Trying to connect to PostgreSQL");
 
 // Check the PostgreSQL connection
-pool.connect((err, client, release) => {
-  if (err) {
-    return console.error("Error acquiring client", err.stack);
-  }
-  console.log("Connected to PostgreSQL pool");
-  release(); // release the client back to the pool
-});
+// pool.connect((err, client, release) => {
+//   if (err) {
+//     return console.error("Error acquiring client", err.stack);
+//   }
+//   console.log("Connected to PostgreSQL pool");
+//   release(); // release the client back to the pool
+// });
+
+requestHandler();
 
 // Prometheus
 import promMid from "express-prometheus-middleware";
